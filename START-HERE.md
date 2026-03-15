@@ -8,7 +8,9 @@
 
 ## Onboarding Sequence
 
-You are starting a brand new project from this template. Before writing any code or creating any plans, you need to understand what's being built. Follow these steps in order.
+You are starting a brand new project from this template. This repo (`matts_team`) is a template only — it must be detached from its git history and repointed to the user's own repository. Follow these steps in order.
+
+---
 
 ### Step 1 — Intake
 
@@ -19,22 +21,46 @@ Ask the user the following questions. Ask them all at once, not one at a time:
 3. **Tech stack** — What language, framework, and runtime? (e.g. TypeScript + Next.js, Python + FastAPI, etc.) If unsure, recommend the simplest stack that fits and ask for confirmation.
 4. **Core features** — List the 3-5 most important things this app must do in version 1. These will become the first milestone's slices.
 5. **Constraints** — Any hard requirements? (deployment target, must integrate with X, must run offline, specific performance requirements, etc.) Say "none" if not applicable.
+6. **New repo URL** — Have you already created an empty repo on GitHub/GitLab/etc. for this project? If yes, paste the URL. If no, say "not yet" and you'll add it later.
 
 Wait for the user's answers before proceeding.
 
 ---
 
-### Step 2 — Scaffold the project
+### Step 2 — Detach from the template repo
 
-Based on the answers, create the project structure. This means actually writing the files — not asking the user to do it.
+This folder was cloned from a template. Strip the template's git history and start fresh.
 
-**Always create:**
-- `README.md` — project name, one-line description, setup instructions (update the existing one)
-- `package.json` (or equivalent for the stack) — correct name, description, and dependencies for the chosen stack
-- `tsconfig.json` (if TypeScript) — appropriate config for the chosen framework
-- `.gitignore` — appropriate for the stack
-- `src/` — entry point file appropriate for the stack (e.g. `src/index.ts`, `src/main.py`, `src/app/page.tsx`)
-- Any framework-required config files (e.g. `next.config.ts`, `vite.config.ts`)
+Run these commands:
+```
+rm -rf .git
+git init
+git add .gitignore
+git commit -m "chore: initial commit from gsd-template"
+```
+
+Do not stage all files yet — just `.gitignore` first so build artifacts and secrets are excluded from the start.
+
+If the user provided a new repo URL, set it as the remote:
+```
+git remote add origin <url>
+```
+
+If they said "not yet", tell them: "When your repo is ready, run: `git remote add origin <your-repo-url>`"
+
+---
+
+### Step 3 — Scaffold the project
+
+Based on the intake answers, create the project structure. Write the actual files — do not ask the user to do it.
+
+**Always create or update:**
+- `README.md` — project name, one-line description, setup and run instructions
+- `package.json` (or stack equivalent) — correct name, description, and dependencies
+- `tsconfig.json` (if TypeScript) — appropriate for the chosen framework
+- `.gitignore` — appropriate for the stack (replace the template's .gitignore)
+- `src/` — entry point file for the chosen stack
+- Any framework-required config files
 
 **Stack scaffolding guidance:**
 
@@ -45,13 +71,14 @@ Based on the answers, create the project structure. This means actually writing 
 | Python | `src/main.py` | `pyproject.toml` or `requirements.txt` |
 | React (Vite) | `src/main.tsx` | `vite.config.ts`, `index.html` |
 
-Use the appropriate scaffold for the chosen stack. If the stack isn't in this table, use your best judgment and document the choices in `.gsd/decisions.md`.
+If the stack isn't in this table, use your best judgment and document the decision in `.gsd/decisions.md`.
 
 ---
 
-### Step 3 — Initialize GSD state
+### Step 4 — Initialize GSD state
 
 1. Update `.gsd/state.md`:
+   - Set **Project** to the project name
    - Set **Active Milestone** to `M001 — [project name] v1`
    - Set **Phase** to `Planning`
    - Set **Next Action** to `Create the M001 roadmap based on the core features: [list them]`
@@ -62,15 +89,31 @@ Use the appropriate scaffold for the chosen stack. If the stack isn't in this ta
    | D002 | M001 | stack | Framework | [chosen framework] | [rationale] | Yes — if requirements change |
    ```
 
-3. Create `.gsd/milestones/M001/roadmap.md` with slices derived from the core features the user listed. Follow the roadmap format from `GSD-WORKFLOW.md`. Write a boundary map. Each feature becomes one slice (or is split if complex). Order by risk — highest risk first.
+3. Create `.gsd/milestones/M001/roadmap.md` with slices derived from the core features. Follow the roadmap format from `GSD-WORKFLOW.md`. Each feature becomes one slice (or is split if complex). Order by risk — highest risk first.
 
 ---
 
-### Step 4 — Confirm and hand off
+### Step 5 — Initial commit of the new project
+
+Stage all scaffolded files and commit:
+```
+git add .
+git commit -m "chore: scaffold [project name] from gsd-template"
+```
+
+If a remote was set, push:
+```
+git push -u origin main
+```
+
+---
+
+### Step 6 — Confirm and hand off
 
 Tell the user:
 - What was scaffolded (list the files created)
 - What M001 slices were created
+- Git status: whether they're connected to a remote or still need to add one
 - What to do next: "Say 'start planning' to begin the first slice, or 'discuss' to review the roadmap first."
 
 Then delete this file (`START-HERE.md`). Onboarding is complete.
