@@ -1,56 +1,16 @@
-import { ClaudeAgent } from '@anthropic-ai/claude-agent-sdk'
-import { readFileSync, existsSync } from 'node:fs'
-import { join } from 'node:path'
-
 // ---------------------------------------------------------------------------
-// GSD Agent — entry point for local VS Code development
+// GSD Template — VS Code + GitHub Copilot (Claude) entry point
 //
-// This is a thin wrapper around the Claude Agent SDK. The GSD methodology
-// lives in CLAUDE.md (loaded automatically by the SDK) and GSD-WORKFLOW.md.
+// This template is driven through VS Code's Copilot chat session using Claude.
+// No Anthropic API key is required. Your Copilot license handles authentication.
 //
-// Usage:
-//   npm run build && node dist/index.js "your prompt here"
-//   Or via VS Code launch config: Run Agent
+// How to use:
+//   1. Open this folder in VS Code.
+//   2. Switch the Copilot chat model to Claude (claude-sonnet or claude-opus).
+//   3. Claude automatically reads CLAUDE.md as project context.
+//   4. Start a chat: "Read .gsd/state.md and tell me what's next."
+//
+// Add your application source code here as the project grows.
 // ---------------------------------------------------------------------------
 
-const projectRoot = new URL('..', import.meta.url).pathname
-
-function loadSystemPrompt(): string {
-  const claudeMd = join(projectRoot, 'CLAUDE.md')
-  const workflowMd = join(projectRoot, 'GSD-WORKFLOW.md')
-
-  const parts: string[] = []
-
-  if (existsSync(claudeMd)) {
-    parts.push(readFileSync(claudeMd, 'utf-8'))
-  }
-
-  if (existsSync(workflowMd)) {
-    parts.push('\n\n---\n\n')
-    parts.push(readFileSync(workflowMd, 'utf-8'))
-  }
-
-  return parts.join('')
-}
-
-async function main() {
-  const prompt = process.argv.slice(2).join(' ')
-
-  if (!prompt) {
-    console.error('Usage: node dist/index.js "your prompt here"')
-    process.exit(1)
-  }
-
-  const agent = new ClaudeAgent({
-    systemPrompt: loadSystemPrompt(),
-    cwd: projectRoot,
-  })
-
-  const result = await agent.run(prompt)
-  console.log(result)
-}
-
-main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+export {}

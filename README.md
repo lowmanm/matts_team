@@ -1,53 +1,41 @@
 # matts_team
 
-A local VS Code template for building applications with the GSD (Get Stuff Done) workflow and the Claude Agent SDK.
+A local VS Code template for building applications with the GSD (Get Stuff Done) workflow, driven through VS Code Copilot chat with Claude.
 
 ## What This Is
 
-This template replicates the GSD methodology — a structured planning and execution system for AI-assisted development — without the GSD-2 CLI framework (`@gsd/pi-coding-agent`). It runs locally in VS Code using the Claude Agent SDK directly.
+This template replicates the GSD methodology — a structured planning and execution system for AI-assisted development — without the GSD-2 CLI framework. No Anthropic API key required. You interact with Claude entirely through VS Code's Copilot chat using your existing Copilot license.
 
 ## Prerequisites
 
-- Node.js 18+
-- An Anthropic API key
+- VS Code with GitHub Copilot
+- Node.js 18+ (for building application code)
 
 ## Setup
 
-```bash
-npm install
-cp .env.example .env
-# Add your ANTHROPIC_API_KEY to .env
-npm run build
-```
+1. Open this folder in VS Code.
+2. In Copilot Chat, switch the model to Claude (claude-sonnet or claude-opus).
+3. Start a session: `Read .gsd/state.md and tell me what's next.`
 
-## Usage
-
-**From the terminal:**
-```bash
-node dist/index.js "your prompt here"
-```
-
-**From VS Code:** Use the `Run Agent` launch config (F5).
-
-**With Claude Code:** Open this folder in VS Code with the Claude Code extension. `CLAUDE.md` is automatically loaded as the system context.
+That's it. `CLAUDE.md` is automatically loaded by Copilot as project context.
 
 ## Project Structure
 
 ```
 .
-├── CLAUDE.md              # GSD agent instructions (loaded by Claude Code)
+├── CLAUDE.md              # GSD instructions — loaded automatically by Copilot
 ├── GSD-WORKFLOW.md        # Full GSD methodology reference
 ├── agents/
-│   ├── scout.md           # Codebase recon subagent
-│   ├── researcher.md      # Web research subagent
-│   └── worker.md          # General-purpose subagent
+│   ├── scout.md           # Codebase recon subagent definition
+│   ├── researcher.md      # Web research subagent definition
+│   └── worker.md          # General-purpose subagent definition
 ├── .gsd/
 │   ├── state.md           # Current project state — read this first
 │   ├── decisions.md       # Append-only decisions register
 │   └── milestones/        # Milestone/slice/task plans and summaries
 ├── src/
-│   └── index.ts           # Agent entry point (Claude Agent SDK)
-├── .vscode/               # VS Code settings, launch configs, tasks
+│   └── index.ts           # Application source (add your code here)
+├── .vscode/               # VS Code settings, launch config, tasks
 ├── package.json
 └── tsconfig.json
 ```
@@ -56,7 +44,7 @@ node dist/index.js "your prompt here"
 
 Work flows through these phases:
 
-1. **Discuss** — capture user decisions on ambiguities
+1. **Discuss** — capture decisions on ambiguities before planning
 2. **Research** — scout codebase and docs
 3. **Plan** — decompose into milestones → slices → tasks
 4. **Execute** — implement one task at a time
@@ -67,11 +55,3 @@ Work flows through these phases:
 All state lives in `.gsd/`. Start every session by reading `.gsd/state.md`.
 
 See `GSD-WORKFLOW.md` for the full methodology.
-
-## Environment Variables
-
-Create a `.env` file:
-
-```env
-ANTHROPIC_API_KEY=sk-ant-...
-```
