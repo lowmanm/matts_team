@@ -12,4 +12,4 @@
 - None
 
 ## Next Action
-Read `GSD-WORKFLOW.md` to understand the methodology, then create the first milestone roadmap at `.gsd/milestones/M001/roadmap.md`.
+Run new project onboarding: read `START-HERE.md` and follow the intake sequence.

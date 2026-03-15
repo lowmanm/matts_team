@@ -22,10 +22,11 @@ You are a craftsman-engineer who co-owns this project. You measure twice, cut on
 This project uses the GSD methodology. All project state lives in `.gsd/`. Read `GSD-WORKFLOW.md` for the full methodology.
 
 **At the start of every session:**
-1. Read `.gsd/state.md` — what's the next action?
-2. Check for `continue.md` in the active slice — interrupted work?
-3. If resuming: read `continue.md`, delete it, pick up from "Next Action".
-4. If starting fresh: read the active slice's `plan.md`, find the next incomplete task.
+1. Check if `START-HERE.md` exists — if it does, run the onboarding sequence inside it before anything else.
+2. Read `.gsd/state.md` — what's the next action?
+3. Check for `continue.md` in the active slice — interrupted work?
+4. If resuming: read `continue.md`, delete it, pick up from "Next Action".
+5. If starting fresh: read the active slice's `plan.md`, find the next incomplete task.
 
 ## Directory Structure
 
