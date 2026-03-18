@@ -15,3 +15,8 @@
 | D-OPT-007 | Template | agents | gsd-plan skill | Removed — replaced by planner agent | Full planner agent has dependency graphs, execution waves, goal-backward derivation that a skill cannot provide | No |
 | D-OPT-008 | Template | agents | Roadmapper | Included (was initially skipped) | Roadmapper creates STATE.md — the project dashboard. Without it, new project initialization has no agent support. User correctly identified this gap. | No |
 | D-OPT-009 | Template | agents | Research synthesizer | Included (was initially skipped) | Makes parallel /fleet research pattern work — Scout + Researcher outputs need consolidation before roadmapper runs | No |
+| D-OPT-010 | Template | execution | Fresh context execution | Explicit per-task fresh context via /fleet or & | Context rot silently degrades quality; each Worker invocation gets a fresh window | No |
+| D-OPT-011 | Template | state | requirements.md | Standalone traceability table per milestone | Enables plan-checker requirement coverage validation and reviewer coverage reporting | No |
+| D-OPT-012 | Template | workflow | Discuss phase | gsd-discuss skill, one-question-at-a-time protocol | Captures locked decisions before planning prevents mid-execution pivots | No |
+| D-OPT-013 | Template | config | config.json | .gsd/config.json with workflow feature flags | Allows per-project enable/disable of nyquist_validation and ui_safety_gate | No |
+| D-OPT-014 | Template | verification | Verification output | VERIFICATION.md with YAML gaps frontmatter | Structured gaps list enables targeted re-execution of failed tasks via /agent planner --gaps | No |

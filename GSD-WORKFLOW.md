@@ -16,9 +16,10 @@ Read these files in order and act on what they say:
 
 1. **`.gsd/state.md`** — Where are we? What's the next action?
 2. **`.gsd/milestones/<active>/roadmap.md`** — What's the plan? Which slices are done?
-3. **`.gsd/milestones/<active>/context.md`** — Project-specific decisions and constraints.
-4. If a slice is active, read its **`plan.md`** — Which tasks exist? Which are done?
-5. If a task was interrupted, check for **`continue.md`** in the active slice directory.
+3. **`.gsd/milestones/<active>/requirements.md`** — Full requirement traceability table.
+4. **`.gsd/milestones/<active>/context.md`** — Project-specific decisions and constraints.
+5. If a slice is active, read its **`plan.md`** — Which tasks exist? Which are done?
+6. If a task was interrupted, check for **`continue.md`** in the active slice directory.
 
 Then do the thing `state.md` says to do next.
 
@@ -66,6 +67,20 @@ Then execute T03 which depends on T01.
 # 6. Advance
 Mark S[N] done in roadmap.md. Update state.md. Move to next slice.
 ```
+
+### Preventing Context Rot
+
+Context rot is the primary quality failure mode in long AI sessions. As a context window fills, the agent silently degrades — plans made at 20% context are significantly better than plans made at 80%. GSD addresses this architecturally:
+
+**The pattern:** Each executor runs in a fresh context window. The orchestrating session stays lean and delegates work rather than doing it inline.
+
+| Pattern | Use for | How |
+|---------|---------|-----|
+| `/fleet Execute T01 and T02` | Parallel tasks (Wave 0) | Each task spawns its own fresh agent |
+| `& Execute T01 from [path]` | Sequential tasks, long runs | Background cloud agent, fresh context |
+| `/agent worker` | Single-task, current session | Works for short tasks only |
+
+**Workers load everything from files.** A Worker invocation must succeed from a completely cold start — no prior conversation context. All inputs come from `T[NN]-plan.md`, `research.md`, `T[NN]-summary.md`, and `decisions.md`. This is why the file formats matter.
 
 ### Autopilot Mode
 
@@ -261,6 +276,10 @@ Exact next thing to do.
 **Purpose:** Capture user decisions on gray areas before planning.
 **Produces:** `context.md`
 **When to use:** When the scope has ambiguities the user should weigh in on.
+
+> In Copilot CLI: the `gsd-discuss` skill handles this. It loads the slice requirements,
+> identifies genuine decision points, asks one question at a time, and writes `context.md`.
+> Questions are categorized as: Decision (locked), Deferred (out of scope), or Discretion (your judgment).
 
 ### Phase 2: Research (Optional)
 **Purpose:** Scout the codebase and relevant docs before planning.
