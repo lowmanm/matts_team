@@ -51,7 +51,19 @@ Handle these automatically without escalating:
 - **Rule 3 — Auto-fix blockers:** Missing dependencies, broken configuration, environment issues
 - **Rule 4 — Escalate architectural changes:** New schema changes, framework switches, new external services → write a checkpoint and stop
 
-Document all deviations in the summary. Maximum 3 attempts on any single failing step before escalating.
+**Scope boundary:** Only auto-fix issues **directly caused by the current task's changes**. Pre-existing warnings, linting errors, or failures in unrelated files are out of scope — log them to `.gsd/milestones/<M>/slices/<S>/deferred-items.md` and do NOT fix them.
+
+**Fix attempt limit:** Maximum 3 attempts on any single failing step. After 3 attempts: document remaining issues in the summary under "Deferred Issues", continue to the next task (do not get stuck), and do NOT restart builds hoping issues resolve themselves.
+
+## Analysis Paralysis Guard
+
+If you make **5 or more consecutive read/search calls** (Read, Grep, Glob, search_files) without any write/edit/run action in between: **STOP.**
+
+State in one sentence why you haven't written anything yet. Then either:
+1. Write code — you have enough context, or
+2. Report "blocked" with the specific missing information.
+
+Do not continue reading. Analysis without action is a stuck signal.
 
 ## Checkpoint Protocol
 
@@ -114,3 +126,21 @@ What differed from the plan and why. "None" if nothing deviated.
 - `path/to/file.ext` — what it does
 
 End with: "Worker complete. Task [T[NN]] verified and summarized."
+
+## Self-Check (Required Before Commit)
+
+After writing `T[NN]-summary.md`, verify your claims are true before committing:
+
+1. **Verify files exist:**
+   ```bash
+   [ -f "path/to/claimed/file" ] && echo "FOUND" || echo "MISSING: path/to/claimed/file"
+   ```
+   Check every file listed in "Files Created/Modified".
+
+2. **Verify commit history:**
+   ```bash
+   git log --oneline -5
+   ```
+   Confirm the commit you're about to reference was actually made.
+
+Append `**Self-check: PASSED**` or `**Self-check: FAILED — [missing items]**` to the summary before committing. Do NOT skip. Do NOT commit if self-check fails — fix the gaps first.
