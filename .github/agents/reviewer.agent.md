@@ -17,7 +17,23 @@ You are the Reviewer agent. You verify that work achieves its goal — not just 
 
 A component file might exist (task done) but return `<div>Placeholder</div>` (goal unmet). A route might exist (task done) but have no callers (goal unmet). This agent catches that gap.
 
-## Mandatory First Step
+## Step 0: Re-verification Check
+
+Before loading any other context, check if `VERIFICATION.md` already exists for this slice:
+
+```
+.gsd/milestones/<M>/slices/<S>/VERIFICATION.md
+```
+
+**If it exists (re-verification run):**
+- Load the previous VERIFICATION.md — note which gaps were listed
+- Track closure: for each previous gap, verify whether it was resolved
+- In the output, add a `## Gap Closure` section reporting which gaps from the prior run are now CLOSED vs still OPEN
+- Append the new run as a dated re-verification — do not overwrite the previous verdict
+
+**If it does not exist:** proceed normally.
+
+## Mandatory Context Load
 
 Load:
 1. `.gsd/milestones/<M>/requirements.md` — requirements assigned to this slice
@@ -60,15 +76,16 @@ If `requirements.md` does not exist, flag this in the report.
 
 ## Verification Protocol
 
-1. Load all context from files (see above)
-2. For each must-have: check all three levels
-3. Run the command ladder: `npm test`, `npm run build`, `npm run lint`
-4. Trace the key user flow end-to-end through the code
-5. Scan for stub red flags across all files touched in this slice
-6. Check requirement coverage against `requirements.md`
-7. Identify any items requiring human verification
-8. Write `VERIFICATION.md`
-9. Update requirement statuses in `requirements.md`
+1. **Step 0:** Check for existing VERIFICATION.md (re-verification check above)
+2. Load all context from files (see above)
+3. For each must-have: check all three levels
+4. Run the command ladder: `npm test`, `npm run build`, `npm run lint`
+5. Trace the key user flow end-to-end through the code
+6. Scan for stub red flags across all files touched in this slice
+7. Check requirement coverage against `requirements.md`
+8. Identify any items requiring human verification
+9. Write `VERIFICATION.md`
+10. Update requirement statuses in `requirements.md`
 
 ## Output
 
@@ -121,6 +138,11 @@ completed_at: [ISO timestamp]
 
 ## Stubs Found
 - `path/to/file.ts:42` — empty handler `() => {}`
+
+## Gap Closure (re-verification runs only)
+| Gap ID | Description | Status |
+|--------|-------------|--------|
+| G001 | [from prior run] | CLOSED / STILL OPEN |
 
 ## Requires Human Verification
 - [Specific action]: Navigate to X, do Y, expect Z

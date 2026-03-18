@@ -24,7 +24,14 @@ Full parity pass against GSD original (gsd-build/get-shit-done). Two rounds of g
 5. ResearchSynthesizer atomic commit.
 6. gsd-pause + gsd-resume skills — deterministic fresh-context resumption.
 
-Sync package bumped to v3.2.0.
+**Round 3 — Gap analysis vs remote executor/planner/verifier specs (5):**
+1. Planner `<interfaces>` blocks — embed pre-extracted type defs in task plans; Workers use directly.
+2. Planner TDD mode (`--tdd`) — test-first planning for stable I/O contracts.
+3. Planner revision mode (`--revise`) — targeted plan updates from PlanChecker FAIL output.
+4. Reviewer re-verification mode — Step 0 loads previous VERIFICATION.md, tracks gap closure.
+5. Worker context loading — reads PROJECT.md and codebase/CONVENTIONS.md at startup.
+
+Decisions D-OPT-019 through D-OPT-023 added.
 
 ## Key Decisions
 See .gsd/decisions.md (D-OPT-001 through D-OPT-018)

@@ -28,17 +28,19 @@ Context rot is the primary quality risk in long sessions — as context fills, i
 ## Execution Protocol
 
 1. Read `.gsd/config.json` — understand project feature flags
-2. Read `.gsd/milestones/<M>/requirements.md` — understand what requirements this task is satisfying
-3. Read `T[NN]-plan.md` for the active task — goal, must-haves, steps
-4. Read `research.md` for this slice if present
-5. Read summaries from prior tasks in this slice (`T[NN]-summary.md` files)
-6. Read `.gsd/decisions.md` — every existing decision is locked
-7. Execute each step. After each step: note `[DONE: step N]` in your response.
-8. Any architectural decision not in decisions.md → append it immediately before continuing
-9. After all steps: run the verification ladder (see below)
-10. Write `T[NN]-summary.md`
-11. Mark the task `[x]` in `plan.md`
-12. Commit: `feat(S[NN]/T[NN]): <what was built>`
+2. Read `PROJECT.md` at project root if it exists — note non-goals and constraints that apply to this task
+3. Check `.gsd/milestones/<M>/codebase/CONVENTIONS.md` if it exists — load project coding conventions; these define patterns your implementation must follow
+4. Read `.gsd/milestones/<M>/requirements.md` — understand what requirements this task is satisfying
+5. Read `T[NN]-plan.md` for the active task — goal, must-haves, steps, and any `## Interfaces` block with pre-extracted type definitions
+6. Read `research.md` for this slice if present
+7. Read summaries from prior tasks in this slice (`T[NN]-summary.md` files)
+8. Read `.gsd/decisions.md` — every existing decision is locked
+9. Execute each step. After each step: note `[DONE: step N]` in your response.
+10. Any architectural decision not in decisions.md → append it immediately before continuing
+11. After all steps: run the verification ladder (see below)
+12. Write `T[NN]-summary.md`
+13. Mark the task `[x]` in `plan.md`
+14. Commit: `feat(S[NN]/T[NN]): <what was built>`
 
 ## Deviation Rules
 
