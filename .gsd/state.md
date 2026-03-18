@@ -6,19 +6,28 @@
 **Phase:** Ready
 
 ## What Was Done
-Deep comparison against GSD original (gsd-build/get-shit-done). Addressed 6 high-impact gaps:
+Full parity pass against GSD original (gsd-build/get-shit-done). Two rounds of gap closure:
 
-1. **Fresh context execution** — Worker and Debugger explicitly designed for per-task fresh context via /fleet or & delegation. GSD-WORKFLOW.md explains context rot and the prevention pattern.
-2. **requirements.md** — Roadmapper now produces 3 artifacts (roadmap.md, state.md, requirements.md). PlanChecker validates against it. Worker tracks requirements_satisfied in summary frontmatter. Reviewer checks coverage and updates statuses.
-3. **Researcher format** — Added Phase Requirements table and Validation Architecture section (feeds NyquistAuditor test map).
-4. **VERIFICATION.md with YAML gaps** — Reviewer now produces VERIFICATION.md with structured YAML gaps frontmatter for targeted re-execution via `/agent planner --gaps`.
-5. **gsd-discuss skill** — New skill handles the Discuss phase: adaptive one-question-at-a-time protocol → context.md with Decision/Deferred/Discretion categories.
-6. **config.json** — .gsd/config.json with workflow feature flags (nyquist_validation, ui_safety_gate). NyquistAuditor and UIChecker gate on these flags.
+**Round 1 — High-impact gaps (6):**
+1. Fresh context execution — Worker/Debugger designed for per-task fresh context.
+2. requirements.md — Roadmapper now produces 4 artifacts including PROJECT.md. Full R-ID traceability through planning → execution → verification.
+3. Researcher format — Phase Requirements table + Validation Architecture section.
+4. VERIFICATION.md with YAML gaps — structured gap frontmatter for targeted replanning.
+5. gsd-discuss skill — one-question-at-a-time discuss phase → context.md.
+6. config.json — .gsd/config.json with nyquist_validation and ui_safety_gate flags.
 
-Sync package bumped to v3.1.0.
+**Round 2 — Medium-impact gaps (6):**
+1. Scout /fleet parallelism — 4 focus areas run concurrently.
+2. Roadmapper 4 artifacts — PROJECT.md now first artifact; atomic git commit.
+3. Planner R-ID propagation + gap-closure mode (--gaps).
+4. IntegrationChecker → Boundary Map primary source; contract validation table.
+5. ResearchSynthesizer atomic commit.
+6. gsd-pause + gsd-resume skills — deterministic fresh-context resumption.
+
+Sync package bumped to v3.2.0.
 
 ## Key Decisions
-See .gsd/decisions.md (D-OPT-001 through D-OPT-014)
+See .gsd/decisions.md (D-OPT-001 through D-OPT-018)
 
 ## Blockers
 None

@@ -42,7 +42,9 @@ const SYNC_FILES = [
 
   // Skills
   '.github/skills/gsd-discuss.md',
+  '.github/skills/gsd-pause.md',
   '.github/skills/gsd-quick.md',
+  '.github/skills/gsd-resume.md',
   '.github/skills/gsd-summarize.md',
   '.github/skills/gsd-verify.md',
 ]

@@ -1,6 +1,6 @@
 {
   "name": "@matts-team/gsd",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "GSD workflow infrastructure — sync shared agent definitions and methodology files into any project",
   "type": "module",
   "bin": {
