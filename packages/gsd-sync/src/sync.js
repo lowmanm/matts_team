@@ -1,6 +1,6 @@
-import { copyFile, mkdir, readdir, stat } from 'fs/promises'
+import { copyFile, mkdir } from 'fs/promises'
 import { existsSync } from 'fs'
-import { join, dirname, relative } from 'path'
+import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -13,10 +13,14 @@ const TEMPLATES_DIR = join(__dirname, '..', 'templates')
 const SYNC_FILES = [
   'GSD-WORKFLOW.md',
   'CLAUDE.md',
-  'agents/orchestrator.md',
-  'agents/scout.md',
-  'agents/researcher.md',
-  'agents/worker.md',
+  '.github/agents/scout.agent.md',
+  '.github/agents/researcher.agent.md',
+  '.github/agents/worker.agent.md',
+  '.github/agents/reviewer.agent.md',
+  '.github/skills/gsd-plan.md',
+  '.github/skills/gsd-quick.md',
+  '.github/skills/gsd-summarize.md',
+  '.github/skills/gsd-verify.md',
 ]
 
 /**

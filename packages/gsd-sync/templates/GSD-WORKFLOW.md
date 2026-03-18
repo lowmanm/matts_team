@@ -24,6 +24,72 @@ Then do the thing `state.md` says to do next.
 
 ---
 
+## Runtime: GitHub Copilot CLI
+
+This workflow is optimized for **GitHub Copilot CLI** (GA Feb 2026).
+Install: `npm install -g @github/copilot`
+
+### Key CLI Primitives
+
+| Command | What it does |
+|---|---|
+| `/plan` | Analyze the current slice and produce an implementation plan |
+| `/fleet` | Decompose the plan into parallel subagents and execute concurrently |
+| `& <prompt>` | Delegate to background cloud agent — terminal stays free |
+| `/resume` | Pull a background session back to local |
+| `/tasks` | Monitor all running subagent tasks |
+| `/agent scout` | Invoke Scout for codebase recon before planning |
+| `/agent researcher` | Invoke Researcher for external research brief |
+| `/agent worker` | Invoke Worker for focused task execution |
+| `/diff` | Review all changes made this session before committing |
+
+### Recommended Slice Workflow (CLI)
+
+```bash
+# 1. Orient
+Read .gsd/state.md
+
+# 2. Research (parallel)
+/fleet Scout this codebase for patterns relevant to [slice goal], and research
+external best practices for [technology] concurrently
+
+# 3. Plan
+/plan Based on research.md and plan.md for S[N], decompose into tasks
+
+# 4. Execute (parallel where independent)
+/fleet Execute T01 and T02 in parallel — they are independent.
+Then execute T03 which depends on T01.
+
+# 5. Verify
+/agent reviewer Review S[N] against must-haves
+
+# 6. Advance
+Mark S[N] done in roadmap.md. Update state.md. Move to next slice.
+```
+
+### Autopilot Mode
+
+For well-defined slices, run fully autonomously:
+
+```
+Switch to autopilot mode, then: /plan S[N] and /fleet execute all tasks
+```
+
+Walk away. Use `/tasks` to monitor. Come back to committed, verified work.
+
+### Quick Tasks
+
+For ad-hoc work, the `gsd-quick` skill handles lightweight task tracking:
+
+```
+Quick task: fix the broken auth redirect on login
+```
+
+Copilot CLI loads the `gsd-quick` skill automatically and handles
+scaffolding, execution, summary, and commit.
+
+---
+
 ## The Hierarchy
 
 ```
@@ -201,6 +267,9 @@ Exact next thing to do.
 **Produces:** `research.md`
 **When to use:** When working in unfamiliar code or with unfamiliar libraries.
 
+> In Copilot CLI: use `/fleet` to run Scout and Researcher agents in parallel.
+> Both write to research.md concurrently. This takes ~3 min vs ~12 min sequential.
+
 ### Phase 3: Plan
 **Purpose:** Decompose work into context-window-sized tasks with must-haves.
 **Produces:** `roadmap.md`, `plan.md`, individual `TNN-plan.md` files.
@@ -214,6 +283,10 @@ Steps:
 2. Read relevant summaries from prior tasks.
 3. Execute each step. Mark progress with `[DONE:n]` in responses.
 4. If you made an architectural decision, append it to `.gsd/decisions.md`.
+
+> In Copilot CLI: use `/fleet` to execute independent tasks in parallel.
+> Use autopilot mode for full autonomous execution of a verified plan.
+> Use `& <task>` to delegate long-running execution to background cloud agent.
 
 ### Phase 5: Verify
 **Purpose:** Check that the task's must-haves are actually met.
