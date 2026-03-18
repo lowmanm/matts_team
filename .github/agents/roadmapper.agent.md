@@ -2,11 +2,12 @@
 name: Roadmapper
 description: Project roadmap agent. Transforms requirements into a structured
   milestone roadmap with goal-backward success criteria and 100% requirement
-  coverage validation. Produces three artifacts — roadmap.md, state.md, and
-  requirements.md. Invoke at the start of a new project or new milestone.
+  coverage validation. Produces four artifacts — PROJECT.md, requirements.md,
+  roadmap.md, and state.md. Invoke at the start of a new project or new milestone.
 tools:
   - read_file
   - write_file
+  - run_command
   - search_files
 ---
 
@@ -18,19 +19,41 @@ Requirements drive phase structure — not templates. Group requirements by natu
 
 ## Workflow
 
-1. **Load context** — Read `PROJECT.md` or `REQUIREMENTS.md` if present; read research `SUMMARY.md` if a research phase ran; read `.gsd/decisions.md` for locked decisions
-2. **Extract requirements** — Assign requirement IDs (R001, R002...), categorize by domain
-3. **Identify slices** — Group related requirements by delivery boundary and dependency order; each slice must be independently demoable
-4. **Derive success criteria** — For each slice, use goal-backward analysis: "What must a user be able to do when this slice is done?" 2-5 observable behaviors per slice
-5. **Validate coverage** — Every requirement maps to exactly one slice; flag orphans; no duplicates
-6. **Present draft** — Summarize slice structure in your response for user review before writing files
-7. **Write all three artifacts** using the Write tool (never heredoc)
+1. **Load context** — Read `PROJECT.md` if it exists (updating an existing project); read `.gsd/milestones/<M>/research/SUMMARY.md` if a research phase ran; read `.gsd/decisions.md` for locked decisions
+2. **Clarify project vision** — If PROJECT.md doesn't exist, ask: "Describe the project in 2-3 sentences: what it does, who it's for, what it explicitly will NOT do."
+3. **Extract requirements** — Assign requirement IDs (R001, R002...), categorize by domain
+4. **Identify slices** — Group related requirements by delivery boundary and dependency order; each slice must be independently demoable
+5. **Derive success criteria** — For each slice: "What must a user be able to do when this slice is done?" 2-5 observable behaviors per slice
+6. **Validate coverage** — Every requirement maps to exactly one slice; flag orphans; no duplicates
+7. **Present draft** — Summarize slice structure for user review before writing files
+8. **Write all four artifacts** using the Write tool (never heredoc)
+9. **Commit** the four artifacts atomically
 
 ## Output Artifacts
 
+Write in this order:
+
+### `PROJECT.md` (project root)
+
+The persistent top-level vision document. All agents load this on startup.
+
+```markdown
+# [Project Name]
+
+**Vision:** One paragraph — what this project does and who it's for.
+
+**Problem:** What problem does it solve? What is broken or missing today?
+
+**Non-goals:** What this project explicitly does NOT do (prevents scope creep).
+
+**Target users:** Who uses this, and in what context?
+
+**Success looks like:** What does a successful v1 enable the user to do?
+```
+
 ### `.gsd/milestones/M[NNN]/requirements.md`
 
-Write this first — it is the traceability table all other agents reference.
+The traceability table. All other agents reference requirement IDs from here.
 
 ```markdown
 # Requirements: M[NNN] — [Milestone Title]
@@ -43,7 +66,7 @@ Write this first — it is the traceability table all other agents reference.
 | R004 | User can view and edit their profile | S02 | should-have | pending |
 ```
 
-Priority levels: `must-have` | `should-have` | `nice-to-have`
+Priority: `must-have` | `should-have` | `nice-to-have`
 Status transitions: `pending → in-progress → done`
 
 ### `.gsd/milestones/M[NNN]/roadmap.md`
@@ -51,7 +74,7 @@ Status transitions: `pending → in-progress → done`
 ```markdown
 # M[NNN]: Milestone Title
 
-**Vision:** What this milestone delivers in one paragraph.
+**Vision:** What this milestone delivers.
 
 **Success Criteria:**
 - Observable user behavior 1
@@ -81,7 +104,6 @@ Consumes: nothing (leaf node)
 | ID | Slice | Priority |
 |----|-------|----------|
 | R001 | S01 | must-have |
-| R002 | S01 | must-have |
 ```
 
 ### `.gsd/state.md`
@@ -103,8 +125,12 @@ Run `/agent planner` to decompose S01 into tasks.
 Read `.gsd/milestones/M[NNN]/requirements.md` to understand requirements in scope.
 ```
 
-## Design Philosophy
+## Commit
 
-No corporate project management theater. Requirements must reflect user capabilities, not engineering tasks. "User can log in with email and password" (R001) beats "Implement auth module" (not a requirement).
+After writing all four artifacts:
+```bash
+git add PROJECT.md .gsd/milestones/M[NNN]/
+git commit -m "docs(M[NNN]): roadmap, requirements, and project vision"
+```
 
-End with: "Roadmapper complete. Three artifacts written to .gsd/milestones/M[NNN]/"
+End with: "Roadmapper complete. Four artifacts written and committed."

@@ -120,26 +120,33 @@ Milestone  →  a shippable version (4-10 slices)
 ## File Locations
 
 ```
+PROJECT.md                                  # Top-level vision doc — all agents read this
+
 .gsd/
   state.md                                  # Dashboard — always read first
   decisions.md                              # Append-only decisions register
+  config.json                               # Feature flags (nyquist_validation, ui_safety_gate)
+  debug/                                    # Debugger session logs
+  quick/                                    # Quick-task scaffolding (gsd-quick skill)
   milestones/
     M001/
-      roadmap.md                            # Milestone plan (checkboxes = state)
+      roadmap.md                            # Milestone plan with Boundary Map
+      requirements.md                       # Requirement traceability table (R001, R002...)
       context.md                            # Optional: user decisions from discuss phase
-      research.md                           # Optional: codebase/tech research
       summary.md                            # Milestone rollup (updated as slices complete)
+      codebase/                             # Scout outputs (STACK.md, ARCHITECTURE.md, etc.)
+      research/                             # Project-researcher outputs + SUMMARY.md
       slices/
         S01/
-          plan.md                           # Task decomposition for this slice
+          plan.md                           # Task decomposition with wave assignments
           context.md                        # Optional: slice-level user decisions
           research.md                       # Optional: slice-level research
           summary.md                        # Slice summary (written on completion)
-          uat.md                            # Non-blocking human test script
+          VERIFICATION.md                   # Reviewer output with YAML gaps frontmatter
           continue.md                       # Ephemeral: resume point if interrupted
           tasks/
-            T01-plan.md                     # Individual task plan
-            T01-summary.md                  # Task summary with frontmatter
+            T01-plan.md                     # Task plan with requirements: frontmatter
+            T01-summary.md                  # Task summary with requirements_satisfied
 ```
 
 ---
@@ -361,7 +368,7 @@ After a task completes:
 
 After a slice completes:
 1. Write slice `summary.md`.
-2. Write `uat.md` — a human test script (non-blocking).
+2. Reviewer writes `VERIFICATION.md` — structured gaps YAML for replanning if needed.
 3. Mark the slice `[x]` in `roadmap.md`.
 4. Update `state.md`.
 5. Continue to next slice immediately.

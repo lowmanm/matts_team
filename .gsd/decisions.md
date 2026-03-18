@@ -20,3 +20,7 @@
 | D-OPT-012 | Template | workflow | Discuss phase | gsd-discuss skill, one-question-at-a-time protocol | Captures locked decisions before planning prevents mid-execution pivots | No |
 | D-OPT-013 | Template | config | config.json | .gsd/config.json with workflow feature flags | Allows per-project enable/disable of nyquist_validation and ui_safety_gate | No |
 | D-OPT-014 | Template | verification | Verification output | VERIFICATION.md with YAML gaps frontmatter | Structured gaps list enables targeted re-execution of failed tasks via /agent planner --gaps | No |
+| D-OPT-015 | Template | workflow | Pause/resume skills | gsd-pause + gsd-resume skills | Explicit continue.md writer/reader pair — prevents context loss mid-task and makes fresh-context resumption deterministic | No |
+| D-OPT-016 | Template | agents | Boundary Map integration | IntegrationChecker uses Boundary Map as primary source | Declared → delivered → consumed contract validation catches integration failures that individual task verification misses | No |
+| D-OPT-017 | Template | agents | Planner gap-closure mode | --gaps flag reads VERIFICATION.md YAML and creates fix tasks | Closes the replanning loop: Reviewer finds gaps → Planner creates targeted fix tasks → Worker closes them | No |
+| D-OPT-018 | Template | state | File locations | PROJECT.md at root; requirements.md and codebase/ and research/ per milestone | PROJECT.md is top-level vision all agents load; codebase/ separates Scout outputs from slice research | No |
