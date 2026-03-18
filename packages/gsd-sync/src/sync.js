@@ -11,13 +11,36 @@ const TEMPLATES_DIR = join(__dirname, '..', 'templates')
  * These should never be manually edited in a project repo.
  */
 const SYNC_FILES = [
+  // Methodology
   'GSD-WORKFLOW.md',
   'CLAUDE.md',
+
+  // Agents — new project / milestone
+  '.github/agents/project-researcher.agent.md',
+  '.github/agents/research-synthesizer.agent.md',
+  '.github/agents/roadmapper.agent.md',
+
+  // Agents — planning
   '.github/agents/scout.agent.md',
   '.github/agents/researcher.agent.md',
+  '.github/agents/planner.agent.md',
+  '.github/agents/plan-checker.agent.md',
+
+  // Agents — execution
   '.github/agents/worker.agent.md',
+  '.github/agents/debugger.agent.md',
+
+  // Agents — verification
   '.github/agents/reviewer.agent.md',
-  '.github/skills/gsd-plan.md',
+  '.github/agents/integration-checker.agent.md',
+  '.github/agents/nyquist-auditor.agent.md',
+
+  // Agents — UI pipeline
+  '.github/agents/ui-researcher.agent.md',
+  '.github/agents/ui-checker.agent.md',
+  '.github/agents/ui-auditor.agent.md',
+
+  // Skills
   '.github/skills/gsd-quick.md',
   '.github/skills/gsd-summarize.md',
   '.github/skills/gsd-verify.md',
