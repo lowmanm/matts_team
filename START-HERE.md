@@ -75,21 +75,27 @@ If the stack isn't in this table, use your best judgment and document the decisi
 
 ---
 
-### Step 4 — Initialize GSD state
+### Step 4 — Initialize GSD state with Roadmapper
 
-1. Update `.gsd/state.md`:
-   - Set **Project** to the project name
-   - Set **Active Milestone** to `M001 — [project name] v1`
-   - Set **Phase** to `Planning`
-   - Set **Next Action** to `Create the M001 roadmap based on the core features: [list them]`
+First, record tech stack decisions in `.gsd/decisions.md`:
+```
+| D001 | M001 | stack | Language | [chosen language] | [rationale] | No |
+| D002 | M001 | stack | Framework | [chosen framework] | [rationale] | Yes — if requirements change |
+```
 
-2. Update `.gsd/decisions.md` with initial tech stack decisions:
-   ```
-   | D001 | M001 | stack | Language | [chosen language] | [rationale] | No |
-   | D002 | M001 | stack | Framework | [chosen framework] | [rationale] | Yes — if requirements change |
-   ```
+Then run the Roadmapper agent to generate the full project foundation:
 
-3. Create `.gsd/milestones/M001/roadmap.md` with slices derived from the core features. Follow the roadmap format from `GSD-WORKFLOW.md`. Each feature becomes one slice (or is split if complex). Order by risk — highest risk first.
+```
+/agent roadmapper
+```
+
+The Roadmapper will produce four artifacts and commit them atomically:
+1. `PROJECT.md` — top-level vision document all agents load at the start of every session
+2. `.gsd/milestones/M001/requirements.md` — requirement traceability table (R001, R002...)
+3. `.gsd/milestones/M001/roadmap.md` — slices from core features with Boundary Map
+4. `.gsd/state.md` — dashboard with active milestone and next action
+
+Each feature becomes one slice (or is split if complex). Highest-risk slices come first.
 
 ---
 
@@ -112,7 +118,8 @@ git push -u origin main
 
 Tell the user:
 - What was scaffolded (list the files created)
-- What M001 slices were created
+- What M001 slices were created in `roadmap.md`
+- What requirements are in `requirements.md` (list the R-IDs and their descriptions)
 - Git status: whether they're connected to a remote or still need to add one
 - What to do next: "Say 'start planning' to begin the first slice, or 'discuss' to review the roadmap first."
 

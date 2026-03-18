@@ -111,7 +111,10 @@ Defined in `.github/agents/` — invoked with `/agent <name>` or auto-delegated 
 
 | Skill | Triggers when |
 |-------|---------------|
+| `gsd-discuss` | Starting a new slice with open questions for the user |
+| `gsd-pause` | Context running low or session ending mid-task |
 | `gsd-quick` | Ad-hoc task without full slice scaffolding |
+| `gsd-resume` | Starting a session after a pause — `continue.md` exists |
 | `gsd-summarize` | Asked to summarize completed work |
 | `gsd-verify` | Asked to verify or after task execution |
 

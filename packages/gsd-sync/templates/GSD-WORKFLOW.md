@@ -214,6 +214,16 @@ Consumes: nothing (leaf node)
 ### `TNN-plan.md` (task-level)
 
 ```markdown
+---
+id: T01
+slice: S01
+milestone: M001
+wave: 0
+requirements:
+  - R001
+  - R002
+---
+
 # T01: Task Title
 
 **Slice:** S01
@@ -339,6 +349,9 @@ provides:
   - What this task built
 key_files:
   - path/to/important/file.ts
+requirements_satisfied:
+  - R001
+  - R002
 duration: 15min
 verification_result: pass
 completed_at: 2026-01-01T16:00:00Z
@@ -378,6 +391,8 @@ After a slice completes:
 ## Continue-Here Protocol
 
 **When to write `continue.md`:** Before losing context (session end, context pressure).
+
+> In Copilot CLI: the `gsd-pause` skill writes `continue.md` automatically. The `gsd-resume` skill reads and deletes it at the start of the next session.
 
 ```markdown
 ---
@@ -424,13 +439,14 @@ Commit conventions:
 
 ## Checklist for a Fresh Session
 
-1. Read `.gsd/state.md` — what's the next action?
-2. Check for `continue.md` in the active slice — interrupted work?
-3. If resuming: read `continue.md`, delete it, pick up from "Next Action".
-4. If starting fresh: read the active slice's `plan.md`, find the next incomplete task.
-5. Read `.gsd/decisions.md` — respect existing decisions.
-6. Read relevant summaries from prior tasks/slices for context.
-7. Do the work.
-8. Verify the must-haves.
-9. Write the summary.
-10. Mark done, update `state.md`, advance.
+1. Read `PROJECT.md` (if it exists) — understand the project vision.
+2. Read `.gsd/state.md` — what's the next action?
+3. Check for `continue.md` in the active slice — interrupted work?
+4. If resuming: read `continue.md`, delete it, pick up from "Next Action".
+5. If starting fresh: read the active slice's `plan.md`, find the next incomplete task.
+6. Read `.gsd/decisions.md` — respect existing decisions.
+7. Read relevant summaries from prior tasks/slices for context.
+8. Do the work.
+9. Verify the must-haves.
+10. Write the summary.
+11. Mark done, update `state.md`, advance.
