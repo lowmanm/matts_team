@@ -1,0 +1,28 @@
+{
+  "name": "@matts-team/gsd",
+  "version": "2.0.0",
+  "description": "GSD workflow infrastructure — sync shared agent definitions and methodology files into any project",
+  "type": "module",
+  "bin": {
+    "gsd": "./bin/gsd.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "node --test src/sync.test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matts-team/gsd-sync.git"
+  }
+}
