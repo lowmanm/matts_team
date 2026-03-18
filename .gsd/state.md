@@ -6,27 +6,23 @@
 **Phase:** Ready
 
 ## What Was Done
-Full port of GSD original agent ecosystem to Copilot CLI .agent.md format:
+Deep comparison against GSD original (gsd-build/get-shit-done). Addressed 6 high-impact gaps:
 
-**15 agents in .github/agents/:**
-- New project pipeline: project-researcher, research-synthesizer, roadmapper
-- Planning pipeline: scout (upgraded), researcher (upgraded), planner (new), plan-checker (new)
-- Execution pipeline: worker (upgraded), debugger (new)
-- Verification pipeline: reviewer (upgraded), integration-checker (new), nyquist-auditor (new)
-- UI pipeline: ui-researcher (new), ui-checker (new), ui-auditor (new)
+1. **Fresh context execution** — Worker and Debugger explicitly designed for per-task fresh context via /fleet or & delegation. GSD-WORKFLOW.md explains context rot and the prevention pattern.
+2. **requirements.md** — Roadmapper now produces 3 artifacts (roadmap.md, state.md, requirements.md). PlanChecker validates against it. Worker tracks requirements_satisfied in summary frontmatter. Reviewer checks coverage and updates statuses.
+3. **Researcher format** — Added Phase Requirements table and Validation Architecture section (feeds NyquistAuditor test map).
+4. **VERIFICATION.md with YAML gaps** — Reviewer now produces VERIFICATION.md with structured YAML gaps frontmatter for targeted re-execution via `/agent planner --gaps`.
+5. **gsd-discuss skill** — New skill handles the Discuss phase: adaptive one-question-at-a-time protocol → context.md with Decision/Deferred/Discretion categories.
+6. **config.json** — .gsd/config.json with workflow feature flags (nyquist_validation, ui_safety_gate). NyquistAuditor and UIChecker gate on these flags.
 
-**3 skills in .github/skills/:**
-- gsd-quick, gsd-summarize, gsd-verify
-- gsd-plan skill removed — replaced by planner agent
-
-**Sync package bumped to v3.0.0** — 15 agents + 3 skills in SYNC_FILES
+Sync package bumped to v3.1.0.
 
 ## Key Decisions
-See .gsd/decisions.md
+See .gsd/decisions.md (D-OPT-001 through D-OPT-014)
 
 ## Blockers
 None
 
 ## Next Action
 Template is ready for use. Run START-HERE.md onboarding to initialize a new project.
-For a new project: /agent project-researcher → /agent research-synthesizer → /agent roadmapper
+New project flow: /agent project-researcher → /agent research-synthesizer → /agent roadmapper

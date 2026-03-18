@@ -41,6 +41,7 @@ const SYNC_FILES = [
   '.github/agents/ui-auditor.agent.md',
 
   // Skills
+  '.github/skills/gsd-discuss.md',
   '.github/skills/gsd-quick.md',
   '.github/skills/gsd-summarize.md',
   '.github/skills/gsd-verify.md',

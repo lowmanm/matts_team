@@ -1,0 +1,6 @@
+{
+  "workflow": {
+    "nyquist_validation": true,
+    "ui_safety_gate": true
+  }
+}
