@@ -23,10 +23,6 @@ Key CLI primitives:
 - `& <prompt>` — background delegation to cloud agent, terminal stays free
 - `/agent <name>` — invoke a named agent from `.github/agents/`
 
-Agents are defined in `.github/agents/` as `.agent.md` files — Copilot CLI delegates to them automatically or invoke explicitly with `/agent <name>`.
-
-Skills in `.github/skills/` load automatically when the context is relevant — no explicit invocation needed.
-
 ## Working Standards
 
 - Code is secure, performant, and clean by default — not checklist compliance.
@@ -48,26 +44,73 @@ All project state lives in `.gsd/`. Read `GSD-WORKFLOW.md` for the full methodol
 
 Phases: **Discuss → Research → Plan → Execute → Verify → Summarize → Advance**
 
-Each phase produces a file. Read `GSD-WORKFLOW.md` for full details and file formats.
-
 ## Agents
 
-| Agent | File | When to use |
-|-------|------|-------------|
-| Scout | `.github/agents/scout.agent.md` | Before planning — recon the codebase |
-| Researcher | `.github/agents/researcher.agent.md` | Before planning — external research brief |
-| Worker | `.github/agents/worker.agent.md` | During execution — one task at a time |
-| Reviewer | `.github/agents/reviewer.agent.md` | After slice completes — structured review |
+Defined in `.github/agents/` — invoked with `/agent <name>` or auto-delegated by `/fleet`.
 
-Invoke: `/agent scout`, `/agent researcher`, `/agent worker`, `/agent reviewer`
+### New Project / Milestone
+| Agent | Command | When |
+|-------|---------|------|
+| ProjectResearcher | `/agent project-researcher` | Domain ecosystem research before roadmapping |
+| ResearchSynthesizer | `/agent research-synthesizer` | Consolidate parallel research → SUMMARY.md |
+| Roadmapper | `/agent roadmapper` | Requirements → ROADMAP.md + STATE.md |
 
-For parallel research: `/fleet Run scout and researcher concurrently for S[N]`
+### Planning
+| Agent | Command | When |
+|-------|---------|------|
+| Scout | `/agent scout` | Codebase recon before planning any slice |
+| Researcher | `/agent researcher` | Technical research for a specific slice |
+| Planner | `/agent planner` | Slice → task plans with dependency graph |
+| PlanChecker | `/agent plan-checker` | 9-dimension plan validation before execution |
+
+### Execution
+| Agent | Command | When |
+|-------|---------|------|
+| Worker | `/agent worker` | Execute one task from a verified plan |
+| Debugger | `/agent debugger` | Investigate a bug with scientific method |
+
+### Verification
+| Agent | Command | When |
+|-------|---------|------|
+| Reviewer | `/agent reviewer` | Goal-backward slice verification |
+| IntegrationChecker | `/agent integration-checker` | Cross-phase wiring after milestone completes |
+| NyquistAuditor | `/agent nyquist-auditor` | Fill behavioral test coverage gaps |
+
+### UI Pipeline (frontend slices)
+| Agent | Command | When |
+|-------|---------|------|
+| UIResearcher | `/agent ui-researcher` | Create UI-SPEC.md design contract |
+| UIChecker | `/agent ui-checker` | Validate spec before planning |
+| UIAuditor | `/agent ui-auditor` | Post-implementation 6-pillar visual audit |
+
+### Typical Slice Workflow (CLI)
+
+```bash
+# New project
+/fleet Run project-researcher and produce SUMMARY.md, then roadmapper
+
+# Before planning a slice
+/agent scout          # codebase recon
+/agent researcher     # technical research (parallel with scout via /fleet)
+
+# Plan
+/agent planner        # decompose slice into tasks
+/agent plan-checker   # validate plans before spending execution context
+
+# Execute
+/fleet Execute T01 and T02 in parallel — they are independent (Wave 0)
+/agent worker         # execute T03 (depends on Wave 0)
+
+# Verify
+/agent reviewer       # goal-backward slice verification
+/agent integration-checker  # after milestone — cross-phase wiring
+/agent nyquist-auditor      # harden test coverage
+```
 
 ## Skills (auto-loaded)
 
 | Skill | Triggers when |
 |-------|---------------|
-| `gsd-plan` | Asked to plan a slice |
 | `gsd-quick` | Ad-hoc task without full slice scaffolding |
 | `gsd-summarize` | Asked to summarize completed work |
 | `gsd-verify` | Asked to verify or after task execution |

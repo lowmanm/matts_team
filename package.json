@@ -9,7 +9,7 @@
     "sync": "gsd sync"
   },
   "devDependencies": {
-    "@matts-team/gsd": "^2.0.0",
+    "@matts-team/gsd": "^3.0.0",
     "typescript": "^5.4.0"
   },
   "engines": {
